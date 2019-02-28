@@ -1,0 +1,21 @@
+#dashboard_pending_review ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#dashboard_pending_review ul li {
+	margin-bottom: 0.6em;
+}
+#dashboard_pending_review h4 {
+	font-weight: normal;
+}
+#dashboard_pending_review h4 abbr {
+	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+	font-size: 11px;
+	color: #999;
+	margin-left: 3px;
+}
+#dashboard_pending_review p {
+	margin: 0;
+	padding: 0;
+}
