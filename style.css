@@ -1,3 +1,20 @@
+#dashboard_pending_review .pending .view-all {
+	float: right;
+	margin: 0 12px 0 0;
+}
+
+#dashboard_pending_review .pending-title {
+	word-wrap: break-word;
+}
+
+#dashboard_pending_review .pending-title a, #dashboard_pending_review .pending-title time, #dashboard_pending_review .pending-title .author {
+	margin: 0 5px 0 0;
+}
+
+#dashboard_pending_review .pending li time, #dashboard_pending_review .pending-title .author {
+	color: #72777c;
+}
+
 #dashboard_pending_review ul {
 	margin: 0;
 	padding: 0;

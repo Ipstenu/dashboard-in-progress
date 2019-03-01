@@ -35,9 +35,11 @@ class DashboardPendingReview {
 	 */
 	public static $version = '3.0';
 
-	// Class initialization
-	public function DashboardPendingReview() {
-		if ( ! current_user_can( 'edit_posts' ) ) {
+	/**
+	 * __construct function.
+	 */
+	public function __construct() {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -52,7 +54,7 @@ class DashboardPendingReview {
 	 * we use a hook/function to make the widget a dashboard-only widget
 	 */
 	public function register_widget() {
-		wp_register_sidebar_widget( 'dashboard_pending_review', __( 'Posts Pending Review', 'dashboard-pending-review' ), array( &$this, 'widget' ) );
+		wp_add_dashboard_widget( 'dashboard_pending_review', __( 'Pending Review', 'dashboard-pending-review' ), array( &$this, 'widget' ) );
 	}
 
 	/**
@@ -82,40 +84,66 @@ class DashboardPendingReview {
 	 * Output the widget contents
 	 */
 	public function widget( $args ) {
-		$pendings_query = new WP_Query(
+		$filtered_post_type  = apply_filters( 'dashboard_pending_review_post_type', 'post' );
+		$filtered_post_type  = ( post_type_exists( $filtered_post_type ) || 'any' === $filtered_post_type ) ? $filtered_post_type : 'post';
+		$post_type_object    = get_post_type_object( $filtered_post_type );
+		$post_type_name      = $post_type_object->labels->name;
+		$pendings_query      = new WP_Query(
 			array(
-				'post_type'      => 'post',
+				'post_type'      => $filtered_post_type,
 				'what_to_show'   => 'posts',
 				'post_status'    => 'pending',
-				'posts_per_page' => 25,
+				'posts_per_page' => absint( apply_filters( 'dashboard_pending_review_posts_shown', 5 ) ),
 				'orderby'        => 'ID', // sort by order created, regardless of date
 				'order'          => 'DESC',
 			)
 		);
-		$pendings       =& $pendings_query->posts;
+		$pending_posts_array =& $pendings_query->posts;
 
-		if ( $pendings && is_array( $pendings ) ) {
+		echo '<div class="pending">';
+
+		if ( $pending_posts_array && is_array( $pending_posts_array ) ) {
 			$list = array();
-			foreach ( $pendings as $pending ) {
-				$url   = get_edit_post_link( $pending->ID );
-				$title = _draft_or_post_title( $pending->ID );
+
+			foreach ( $pending_posts_array as $pending ) {
+				// Default Data
+				$url    = get_edit_post_link( $pending->ID );
+				$title  = _draft_or_post_title( $pending->ID );
+				$author = get_the_author_meta( 'display_name', $pending->post_author );
+
 				// Translators: %s = title.
-				$item  = "<h4><a href='$url' title='" . sprintf( __( 'Edit "%s"' ), esc_attr( $title ) ) . "'>$title</a>";
-				$item .= "<abbr title='" . get_the_time( __( 'Y/m/d g:i:s A' ), $pending ) . "'>" . get_the_time( get_option( 'date_format' ), $pending ) . '</abbr></h4>';
-				if ( $the_content = preg_split( '#\s#', wp_strip_all_tags( $pending->post_content ), 11, PREG_SPLIT_NO_EMPTY ) ) {
-					$item .= '<p>' . join( ' ', array_slice( $the_content, 0, 10 ) ) . ( 10 < count( $the_content ) ? '&hellip;' : '' ) . '</p>';
+				$item  = '<div class="pending-title"><a href="' . esc_url( $url ) . '" aria-label="' . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $title ) ) . '">' . esc_html( $title ) . '</a>';
+				$item .= '<time datetime="' . get_the_time( 'c', $pending ) . '">' . get_the_time( __( 'F j, Y' ), $pending ) . '</time>';
+				// Translators: %s = author display name
+				$item .= '<span class="author">(' . sprintf( __( 'By %s', 'dashboard-pending-review' ), $author ) . ')</span></div>';
+
+				// Content if applicable
+				$the_content = wp_trim_words( $pending->post_content, 10 );
+				if ( $the_content ) {
+					$item .= '<p>' . $the_content . '</p>';
 				}
 				$list[] = $item;
 			}
 			?>
-	<ul>
-		<li><?php echo join( "</li>\n<li>", wp_kses_post( $list ) ); ?></li>
-	</ul>
-	<p class="textright"><a href="edit.php?post_status=pending" class="button"><?php esc_html_e( 'View all' ); ?></a></p>
+
+			<p class="view-all"><a href="<?php echo esc_url( admin_url( 'edit.php?post_status=pending' ) ); ?>">
+				<?php
+				// Translators: %s = post type (i.e. posts, pages, etc)
+				echo esc_html( sprintf( __( 'View all pending %s', 'dashboard-pending-review' ), lcfirst( $post_type_name ) ) );
+				?>
+			</a></p>
+
+			<ul>
+				<li><?php echo join( "</li>\n<li>", wp_kses_post( $list ) ); ?></li>
+			</ul>
+
 			<?php
 		} else {
-			esc_html_e( 'There are no pending posts at the moment', 'dashboard-scheduled-posts' );
+			// Translators: %s = post type (i.e. posts, pages, etc)
+			echo esc_html( sprintf( __( 'There are no pending %s at this time.', 'dashboard-pending-review' ), lcfirst( $post_type_name ) ) );
 		}
+
+		echo '</div>';
 	}
 }
 
