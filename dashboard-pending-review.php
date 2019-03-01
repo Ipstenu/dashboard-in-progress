@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Dashboard: Pending Review
- * Plugin URI: TBD
+ * Plugin URI: https://wordpress.org/plugins/dashboard-pending-review/
  * Description: Displays pending review posts on your dashboard.
- * Version: 3.0.0
+ * Version: 3.0
  * Author: Viper007Bond, Ipstenu
  * Author URI: https://halfelf.org
  * License: GPLv2 (or Later)

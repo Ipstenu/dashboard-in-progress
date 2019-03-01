@@ -46,7 +46,7 @@ https://alex.blog/2019/02/27/from-alexs-family/
 
 == ChangeLog ==
 
-= 3.0.0 =
+= 3.0 =
 * By Mika Epstein
 * Brought up to 2019 coding standards
 * Fixed deprecations
