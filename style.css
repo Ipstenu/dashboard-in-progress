@@ -1,38 +1,38 @@
-#dashboard_pending_review .pending .view-all {
+#dashboard_in_progress .view-all {
 	float: right;
 	margin: 0 12px 0 0;
 }
 
-#dashboard_pending_review .pending-title {
+#dashboard_in_progress .draft-title, #dashboard_in_progress .pending-title {
 	word-wrap: break-word;
 }
 
-#dashboard_pending_review .pending-title a, #dashboard_pending_review .pending-title time, #dashboard_pending_review .pending-title .author {
+#dashboard_in_progress .draft-title a, #dashboard_in_progress .draft-title time, #dashboard_in_progress .draft-title .author, #dashboard_in_progress .pending-title a, #dashboard_in_progress .pending-title time, #dashboard_in_progress .pending-title .author {
 	margin: 0 5px 0 0;
 }
 
-#dashboard_pending_review .pending li time, #dashboard_pending_review .pending-title .author {
+#dashboard_in_progress .draft li time, #dashboard_in_progress .draft-title .author, #dashboard_in_progress .pending li time, #dashboard_in_progress .pending-title .author {
 	color: #72777c;
 }
 
-#dashboard_pending_review ul {
+#dashboard_in_progress ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-#dashboard_pending_review ul li {
+#dashboard_in_progress ul li {
 	margin-bottom: 0.6em;
 }
-#dashboard_pending_review h4 {
+#dashboard_in_progress h4 {
 	font-weight: normal;
 }
-#dashboard_pending_review h4 abbr {
+#dashboard_in_progress h4 abbr {
 	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 	font-size: 11px;
 	color: #999;
 	margin-left: 3px;
 }
-#dashboard_pending_review p {
+#dashboard_in_progress p {
 	margin: 0;
 	padding: 0;
 }
