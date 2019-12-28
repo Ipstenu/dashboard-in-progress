@@ -3,7 +3,7 @@
  * Plugin Name: Dashboard: In Progress
  * Plugin URI: https://wordpress.org/plugins/dashboard-in-progress/
  * Description: Displays unpublished posts on your dashboard.
- * Version: 1.0
+ * Version: 1.1
  * Author: Viper007Bond, Ipstenu
  * Author URI: https://halfelf.org
  * License: GPLv2 (or Later)
@@ -129,7 +129,7 @@ class DashboardInProgress {
 				$item  = '<div class="draft-title"><a href="' . esc_url( $url ) . '" aria-label="' . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $title ) ) . '">' . esc_html( $title ) . '</a>';
 				$item .= '<time datetime="' . get_the_time( 'c', $draft ) . '">' . get_the_time( __( 'F j, Y' ), $draft ) . '</time>';
 				// Translators: %s = author display name
-				$item .= '<span class="author">(' . sprintf( __( 'By %s', 'dashboard-in-progress' ), $author ) . ')</span></div>';
+				$item .= ' <span class="author">(' . sprintf( __( 'By %s', 'dashboard-in-progress' ), $author ) . ')</span></div>';
 
 				// Content if applicable
 				$the_content = wp_trim_words( $draft->post_content, 10 );
@@ -148,7 +148,13 @@ class DashboardInProgress {
 			</a></p>
 
 			<ul>
-				<li><?php echo join( "</li>\n<li>", wp_kses_post( $list ) ); ?></li>
+				<li>
+					<?php
+					foreach ( $list as $item ) {
+						echo '<li>' . wp_kses_post( $item ) . '</li>';
+					}
+					?>
+				</li>
 			</ul>
 
 			<?php
@@ -177,7 +183,7 @@ class DashboardInProgress {
 				$item  = '<div class="pending-title"><a href="' . esc_url( $url ) . '" aria-label="' . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $title ) ) . '">' . esc_html( $title ) . '</a>';
 				$item .= '<time datetime="' . get_the_time( 'c', $pending ) . '">' . get_the_time( __( 'F j, Y' ), $pending ) . '</time>';
 				// Translators: %s = author display name
-				$item .= '<span class="author">(' . sprintf( __( 'By %s', 'dashboard-in-progress' ), $author ) . ')</span></div>';
+				$item .= ' <span class="author">(' . sprintf( __( 'By %s', 'dashboard-in-progress' ), $author ) . ')</span></div>';
 
 				// Content if applicable
 				$the_content = wp_trim_words( $pending->post_content, 10 );
@@ -196,7 +202,13 @@ class DashboardInProgress {
 			</a></p>
 
 			<ul>
-				<li><?php echo join( "</li>\n<li>", wp_kses_post( $list ) ); ?></li>
+				<li>
+					<?php
+					foreach ( $list as $item ) {
+						echo '<li>' . wp_kses_post( $item ) . '</li>';
+					}
+					?>
+				</li>
 			</ul>
 
 			<?php
