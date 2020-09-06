@@ -1,11 +1,12 @@
-=== Easy Dashboard Status ===
+=== Dashboard: In Progress ===
 Contributors: Viper007Bond, Ipstenu
 Donate link: https://ko-fi.com/A236CEN/
 Tags: dashboard, widgets, dashboard widget
 Requires at least: 2.7
-Stable tag: 1.0
+Tested up to: 5.5
+Stable tag: 1.1
 
-Display a list of all unpublished content on your dashboard.
+Display a list of all unpublished (draft and pending) content on your dashboard.
 
 == Description ==
 
@@ -26,19 +27,35 @@ No Special Instructions.
 
 == Frequently Asked Questions ==
 
-= Can I change the post type for pending? =
+= Can I change the post type from 'post'? =
 
-Yes, via filters. You can filter `easy_dashboard_status_post_type` and change the post type to any valid post type or `any`, which will show all pending posts in all post types.
+You can filter `easy_dashboard_status_post_type` and change the post type to any valid post type or `any`, which will show all pending posts in all post types.
 
 = Can I change the default number of posts shown? =
 
-Yes, via (you guessed it) filters.
+You can use the filter `dashboard_in_progress_posts_shown` to change the number. If you somehow make it 0, the default will be 5.
+
+= Can I show different post types for draft and pending? =
+
+Not at this time.
+
+= Can I show multiple post types? =
+
+Not at this time.
+
+= Where can I contribute? =
+
+[Github! Pull requests welcome.](https://github.com/Ipstenu/dashboard-in-progress)
 
 == Screenshots ==
 
-1. Example of a list of pending posts.
+1. Example of a list of posts.
 
 == ChangeLog ==
+
+= 1.1 =
+* Improvements on code for newer WP
+* Updated CSS
 
 = 1.0 =
 * By Mika Epstein

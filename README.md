@@ -1,6 +1,6 @@
 # Dashboard: In Progress
 
-Widget for the WordPress dashboard to display posts pending review.
+Widget for the WordPress dashboard to display posts pending review (i.e draft and pending).
 
 ## Available filters
 

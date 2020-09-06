@@ -2,16 +2,16 @@
 /*
  * Plugin Name: Dashboard: In Progress
  * Plugin URI: https://wordpress.org/plugins/dashboard-in-progress/
- * Description: Displays unpublished posts on your dashboard.
+ * Description: Displays unpublished (draft and pending) posts on your dashboard.
  * Version: 1.1
  * Author: Viper007Bond, Ipstenu
  * Author URI: https://halfelf.org
  * License: GPLv2 (or Later)
  *
  * Copyright 2008-19 Alex Mills (Viper007Bond) - http://www.viper007bond.com/wordpress-plugins/dashboard-pending-review/ https://wordpress.org/plugins/dashboard-pending-review/
- * Copyright 2019 Mika Epstein (Ipstenu)
+ * Copyright 2019-20 Mika Epstein (Ipstenu)
  *
- * This file is part of Easy Dashboard Status, a plugin for WordPress.
+ * This file is part of Dashboard: In Progress, a plugin for WordPress.
  *
  * This plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class DashboardInProgress {
 	 * Version Number
 	 * @var string
 	 */
-	public static $version = '1.0';
+	public static $version = '1.1';
 
 	/**
 	 * __construct function.
@@ -88,12 +88,14 @@ class DashboardInProgress {
 		$filtered_post_type  = ( post_type_exists( $filtered_post_type ) || 'any' === $filtered_post_type ) ? $filtered_post_type : 'post';
 		$post_type_object    = get_post_type_object( $filtered_post_type );
 		$post_type_name      = $post_type_object->labels->name;
+		$number_posts_shown  = absint( apply_filters( 'dashboard_in_progress_posts_shown', 5 ) );
+		$number_posts_shown  = ( 0 === $number_posts_shown ) ? 5 : $number_posts_shown; // default 5
 		$drafts_query        = new WP_Query(
 			array(
 				'post_type'      => $filtered_post_type,
 				'what_to_show'   => 'posts',
 				'post_status'    => 'draft',
-				'posts_per_page' => absint( apply_filters( 'dashboard_in_progress_posts_shown', 5 ) ),
+				'posts_per_page' => $number_posts_shown,
 				'orderby'        => 'ID', // sort by order created, regardless of date
 				'order'          => 'DESC',
 			)
@@ -214,7 +216,7 @@ class DashboardInProgress {
 			<?php
 		} else {
 			// Translators: %s = post type (i.e. posts, pages, etc)
-			echo esc_html( sprintf( __( 'There are no pending %s at this time.', 'dashboard-in-progress' ), lcfirst( $post_type_name ) ) );
+			echo esc_html( sprintf( __( 'There are no draft %s at this time.', 'dashboard-in-progress' ), lcfirst( $post_type_name ) ) );
 		}
 		echo '</div>';
 	}
