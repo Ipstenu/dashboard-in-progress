@@ -3,7 +3,7 @@ Contributors: Viper007Bond, Ipstenu
 Donate link: https://ko-fi.com/A236CEN/
 Tags: dashboard, widgets, dashboard widget
 Requires at least: 2.7
-Tested up to: 5.5
+Tested up to: 5.6
 Stable tag: 1.1
 
 Display a list of all unpublished (draft and pending) content on your dashboard.
